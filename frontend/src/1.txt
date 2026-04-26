@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg:       #060a14;
+  --bg2:      #080d1c;
+  --surface:  #0c1526;
+  --card:     #0f1d35;
+  --card2:    #142240;
+  --border:   #1a2d50;
+  --border2:  #243d6b;
+  --accent:   #00d4ff;
+  --accent2:  #0099cc;
+  --buy:      #00e676;
+  --buy2:     #00c853;
+  --sell:     #ff3d5a;
+  --sell2:    #d50032;
+  --hold:     #ffb300;
+  --hold2:    #ff8f00;
+  --text:     #e2eaf8;
+  --text2:    #a8bcd8;
+  --muted:    #4a6080;
+  --muted2:   #2d4060;
+  --purple:   #7c4dff;
+  --orange:   #ff6d00;
+}
+
+* { box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,212,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 80%, rgba(124,77,255,0.04) 0%, transparent 60%);
+}
+
+.mono { font-family: 'Space Mono', monospace; }
+.outfit { font-family: 'Outfit', sans-serif; }
+.num { font-family: 'Space Mono', monospace; font-variant-numeric: tabular-nums; }
+
+/* ── Stock Card ── */
+.stock-card {
+  background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.stock-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0,212,255,0.03) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.stock-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,212,255,0.08); }
+.stock-card:hover::before { opacity: 1; }
+.stock-card.buy-card  { border-color: rgba(0,230,118,0.2); }
+.stock-card.sell-card { border-color: rgba(255,61,90,0.2); }
+
+/* ── Panel ── */
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.panel-head {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ── Badges ── */
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.06em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-buy   { background: rgba(0,230,118,0.12); color: var(--buy);  border: 1px solid rgba(0,230,118,0.25); }
+.badge-sell  { background: rgba(255,61,90,0.12);  color: var(--sell); border: 1px solid rgba(255,61,90,0.25); }
+.badge-hold  { background: rgba(255,179,0,0.12);  color: var(--hold); border: 1px solid rgba(255,179,0,0.25); }
+.badge-live  { background: rgba(0,212,255,0.1);   color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
+.badge-neu   { background: rgba(74,96,128,0.2);   color: var(--text2);  border: 1px solid var(--border); }
+
+/* ── Buttons ── */
+.dur-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  padding: 5px 14px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dur-btn:hover { color: var(--text); border-color: var(--border2); background: var(--surface); }
+.dur-btn.active {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.08));
+  border-color: rgba(0,212,255,0.5);
+  color: var(--accent);
+  box-shadow: 0 0 12px rgba(0,212,255,0.1);
+}
+
+.filter-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text2); }
+.filter-btn.active {
+  background: rgba(0,212,255,0.1);
+  border-color: rgba(0,212,255,0.4);
+  color: var(--accent);
+}
+
+/* ── Flash animations ── */
+.flash-up   { animation: flashUp   0.7s ease-out; }
+.flash-down { animation: flashDown 0.7s ease-out; }
+@keyframes flashUp   { 0%{background:rgba(0,230,118,0.18)} 100%{background:transparent} }
+@keyframes flashDown { 0%{background:rgba(255,61,90,0.18)}  100%{background:transparent} }
+
+/* ── Chart section label ── */
+.chart-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 14px 4px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Animations ── */
+.fade-in  { animation: fadeIn  0.35s ease-out; }
+.slide-up { animation: slideUp 0.4s  ease-out; }
+@keyframes fadeIn  { from{opacity:0}                         to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+
+/* ── Skeleton ── */
+.skel {
+  background: linear-gradient(90deg, var(--card) 0%, var(--card2) 50%, var(--card) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+
+/* ── Score bar ── */
+.score-bar { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 4px; transition: width 0.9s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── Recharts overrides ── */
+.recharts-tooltip-wrapper { outline: none !important; }
+.recharts-cartesian-grid-horizontal line { stroke: #1a2d50 !important; }
+
+@keyframes spin   { to { transform: rotate(360deg); } }
+@keyframes glow   { 0%,100%{opacity:0.6} 50%{opacity:1} }
+@keyframes pulse  { 0%,100%{transform:scale(1)} 50%{transform:scale(1.4)} }

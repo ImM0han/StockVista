@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --bg:          #f5f5f7;
+  --surface:     #ffffff;
+  --card:        #ffffff;
+  --border:      #e8e8ec;
+  --border2:     #d4d4d8;
+  --accent:      #e91e8c;
+  --accent2:     #c2185b;
+  --accent-bg:   #fdf2f8;
+  --accent-ring: rgba(233,30,140,0.2);
+  --buy:         #059669;
+  --buy-bg:      #ecfdf5;
+  --sell:        #dc2626;
+  --sell-bg:     #fef2f2;
+  --hold:        #d97706;
+  --hold-bg:     #fffbeb;
+  --text:        #111118;
+  --text2:       #71717a;
+  --muted:       #a1a1aa;
+  --ink:         #3f3f46;
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:   0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-accent: 0 4px 20px rgba(233,30,140,0.18);
+  --radius-sm:   8px;
+  --radius:      12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #f4f4f5; }
+::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
+/* ── Base ────────────────────────────────────────────────── */
+body {
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography helpers ──────────────────────────────────── */
+.mono { font-family: 'DM Mono', monospace; }
+.num  { font-family: 'DM Mono', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #71717a;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+  width: 100%;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.card-hover:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+.card-interactive {
+  cursor: pointer;
+}
+.card-interactive:hover {
+  box-shadow: var(--shadow-md);
+  border-color: #c4b5fd;
+}
+.card-interactive:active { transform: translateY(0); }
+
+/* Stock card variants */
+.card-buy:hover  { border-color: rgba(5,150,105,0.3); box-shadow: var(--shadow-sm), 0 0 0 1px rgba(5,150,105,0.15); }
+.card-sell:hover { border-color: rgba(220,38,38,0.3); box-shadow: var(--shadow-sm), 0 0 0 1px rgba(220,38,38,0.15); }
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider { width: 1px; background: var(--border); align-self: stretch; }
+.divider-h { height: 1px; background: var(--border); }
+
+/* ── Badge / Pill ────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  padding: 3px 8px; border-radius: 6px;
+  letter-spacing: 0.01em;
+}
+.badge-buy  { background: var(--buy-bg);  color: var(--buy);  border: 1px solid rgba(5,150,105,0.2); }
+.badge-sell { background: var(--sell-bg); color: var(--sell); border: 1px solid rgba(220,38,38,0.2); }
+.badge-hold { background: var(--hold-bg); color: var(--hold); border: 1px solid rgba(217,119,6,0.2); }
+.badge-accent { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(233,30,140,0.2); }
+.badge-neutral { background: #f4f4f5; color: var(--ink); border: 1px solid var(--border); }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: 'Figtree', sans-serif; font-weight: 500; font-size: 13px;
+  padding: 6px 14px; border-radius: 8px; border: none;
+  cursor: pointer; transition: all 0.14s ease; white-space: nowrap;
+  user-select: none;
+}
+.btn-primary {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 1px 3px rgba(233,30,140,0.3);
+}
+.btn-primary:hover {
+  background: var(--accent2);
+  box-shadow: var(--shadow-accent);
+}
+.btn-ghost {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--surface); border-color: var(--border2); }
+
+/* Duration / segment buttons */
+.seg-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  padding: 5px 12px; border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent; color: #71717a;
+  cursor: pointer; transition: all 0.14s;
+}
+.seg-btn:hover { color: #111118; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.seg-btn.active {
+  background: #e91e8c; color: #fff; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(233,30,140,0.3);
+}
+
+/* Filter pills */
+.filter-pill {
+  font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 600;
+  padding: 5px 14px; border-radius: 99px;
+  border: 1.5px solid #d4d4d8;
+  background: #ffffff; color: #3f3f46;
+  cursor: pointer; transition: all 0.14s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+.filter-pill:hover { border-color: #e91e8c; color: #e91e8c; background: #fdf2f8; }
+.filter-pill.active {
+  background: #e91e8c; border-color: #e91e8c;
+  color: #ffffff; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(233,30,140,0.3);
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th {
+  font-family: 'Figtree', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--muted); padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap; background: var(--surface);
+}
+.tbl td { padding: 10px 12px; border-bottom: 1px solid #f4f4f5; vertical-align: middle; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr { transition: background 0.1s; }
+.tbl tr:hover td { background: var(--surface); }
+.tbl tr.clickable { cursor: pointer; }
+
+/* ── Score bar ───────────────────────────────────────────── */
+.score-track { height: 4px; background: #f4f4f5; border-radius: 99px; overflow: hidden; }
+.score-fill  { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+/* ── Skeleton loader ─────────────────────────────────────── */
+.skel {
+  background: linear-gradient(90deg, #f4f4f5 0%, #e9e9eb 50%, #f4f4f5 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+@keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+
+/* ── Animations ──────────────────────────────────────────── */
+.fade-in  { animation: fadeIn  0.25s ease-out; }
+.slide-up { animation: slideUp 0.3s  ease-out; }
+@keyframes fadeIn  { from{opacity:0}                           to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+/* Stock price flash */
+.flash-up   { animation: flashGreen 0.7s ease-out; }
+.flash-down { animation: flashRed   0.7s ease-out; }
+@keyframes flashGreen { 0%{background:rgba(5,150,105,0.08)}  100%{background:transparent} }
+@keyframes flashRed   { 0%{background:rgba(220,38,38,0.08)}  100%{background:transparent} }
+
+/* Live dot pulse */
+@keyframes livePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(233,30,140,0.4); }
+  50%     { box-shadow: 0 0 0 5px rgba(233,30,140,0); }
+}
+
+/* ── Recharts overrides ──────────────────────────────────── */
+.recharts-tooltip-wrapper { outline: none !important; }
+.recharts-cartesian-grid-horizontal line { stroke: #f0f0f0 !important; }
+
+/* ── Input ───────────────────────────────────────────────── */
+.input-base {
+  font-family: 'Figtree', sans-serif; font-size: 13.5px;
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 7px 12px; outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-base:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-ring); }
+
+@keyframes spin { to { transform: rotate(360deg); } }

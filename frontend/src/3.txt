@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════
+   PALETTE — Clean Light · Magenta Accent
+   Inspired by Apple, Linear, Notion
+   No blue, black, green, or yellow
+═══════════════════════════════════════ */
+:root {
+  --bg:       #f7f7f8;
+  --bg2:      #f0f0f3;
+  --surface:  #ffffff;
+  --card:     #ffffff;
+  --card2:    #fafafa;
+  --border:   #e8e8ec;
+  --border2:  #d0d0d8;
+
+  --accent:   #e0167a;   /* magenta */
+  --accent2:  #b80f62;   /* deep magenta */
+  --accl:     rgba(224, 22, 122, 0.08);
+  --accl2:    rgba(224, 22, 122, 0.14);
+
+  --buy:      #00a86b;   /* green — only for profit signal */
+  --buy2:     #007a4e;
+  --sell:     #e0167a;   /* magenta — loss signal */
+  --sell2:    #b80f62;
+  --hold:     #9747ff;   /* violet — neutral signal */
+  --hold2:    #7a2fe0;
+
+  --text:     #0f0f10;
+  --text2:    #6b6b7a;
+  --muted:    #aaaab8;
+  --muted2:   #e2e2e8;
+
+  --purple:   #9747ff;
+  --orange:   #f45d22;
+}
+
+* { box-sizing: border-box; }
+
+::-webkit-scrollbar              { width: 5px; height: 5px; }
+::-webkit-scrollbar-track        { background: var(--bg); }
+::-webkit-scrollbar-thumb        { background: var(--border2); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover  { background: var(--accent); }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+.num  { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+/* ══ Stock Card ══ */
+.stock-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.stock-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 8px 32px rgba(15, 15, 16, 0.08);
+  transform: translateY(-2px);
+}
+/* Left accent stripe by signal */
+.stock-card.buy-card  { border-left: 3px solid var(--buy); }
+.stock-card.sell-card { border-left: 3px solid var(--sell); }
+.stock-card.hold-card { border-left: 3px solid var(--hold); }
+
+/* ══ Panel ══ */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.panel-head {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ══ Badges ══ */
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-buy  { background: rgba(0,168,107,0.1);  color: var(--buy);   border: 1px solid rgba(0,168,107,0.25); }
+.badge-sell { background: var(--accl2);          color: var(--accent); border: 1px solid rgba(224,22,122,0.25); }
+.badge-hold { background: rgba(151,71,255,0.1); color: var(--hold);  border: 1px solid rgba(151,71,255,0.25); }
+.badge-live { background: var(--accl2);          color: var(--accent); border: 1px solid rgba(224,22,122,0.2); }
+.badge-neu  { background: var(--bg2);            color: var(--text2);  border: 1px solid var(--border); }
+
+/* ══ Duration / filter buttons ══ */
+.dur-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dur-btn:hover { background: var(--bg); color: var(--text); }
+.dur-btn.active {
+  background: var(--accl2);
+  border-color: rgba(224, 22, 122, 0.3);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.filter-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text2); }
+.filter-btn.active {
+  background: var(--accl2);
+  border-color: rgba(224, 22, 122, 0.3);
+  color: var(--accent);
+}
+
+/* ══ Flash animations ══ */
+.flash-up   { animation: flashUp   0.7s ease-out; }
+.flash-down { animation: flashDown 0.7s ease-out; }
+@keyframes flashUp   { 0% { background: rgba(0,168,107,0.12); } 100% { background: transparent; } }
+@keyframes flashDown { 0% { background: rgba(224,22,122,0.12); } 100% { background: transparent; } }
+
+/* ══ Chart section label ══ */
+.chart-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px 4px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ══ Animations ══ */
+.fade-in  { animation: fadeIn  0.35s ease-out; }
+.slide-up { animation: slideUp 0.4s  ease-out; }
+@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ══ Skeleton loader ══ */
+.skel {
+  background: linear-gradient(90deg, var(--bg) 0%, var(--muted2) 50%, var(--bg) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer { 0% { background-position: 200%; } 100% { background-position: -200%; } }
+
+/* ══ Score bar ══ */
+.score-bar  { height: 3px; background: var(--muted2); border-radius: 4px; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 4px; transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
+.score-fill.buy  { background: var(--buy); }
+.score-fill.sell { background: var(--sell); }
+.score-fill.hold { background: var(--hold); }
+
+/* ══ Recharts overrides ══ */
+.recharts-tooltip-wrapper { outline: none !important; }
+.recharts-cartesian-grid-horizontal line { stroke: #e8e8ec !important; }
+
+/* ══ Utility keyframes ══ */
+@keyframes spin  { to { transform: rotate(360deg); } }
+@keyframes glow  { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
