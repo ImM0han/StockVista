@@ -186,7 +186,7 @@ function InvestmentCalculator({ sym, currentPrice }) {
     <div>
       {/* ── What is this? ─────────────────────────────────── */}
       <div style={{ background:'#f0fdf4', border:'1px solid rgba(5,150,105,0.2)', borderRadius:10, padding:'12px 14px', marginBottom:16 }}>
-        <div style={{ fontFamily:'Figtree', fontSize:12, fontWeight:700, color:G, marginBottom:4 }}>📚 How this works</div>
+        <div style={{ fontFamily:'Figtree', fontSize:12, fontWeight:700, color:G, marginBottom:4 }}>How this works</div>
         <div style={{ fontSize:12, color:'#3f3f46', lineHeight:1.6 }}>
           This calculator uses <strong>{sym?.replace('.NS','')}'s real {stats.total_years}-year price history</strong> to estimate what your investment might grow to.
           It is based on past performance — not a guarantee of future results.
@@ -223,7 +223,7 @@ function InvestmentCalculator({ sym, currentPrice }) {
       {stats.yearly_returns && Object.keys(stats.yearly_returns).length > 2 && (
         <div style={{ marginBottom:16 }}>
           <div style={{ fontFamily:'Figtree', fontSize:11, fontWeight:600, color:'#3f3f46', marginBottom:6 }}>
-            📊 Returns each year — green = profit, red = loss
+            Returns each year — green = profit, red = loss
           </div>
           <YearlyReturnsChart yearly={stats.yearly_returns}/>
         </div>
@@ -326,7 +326,7 @@ function InvestmentCalculator({ sym, currentPrice }) {
       }}
         onMouseEnter={e => e.currentTarget.style.boxShadow='0 6px 22px rgba(233,30,140,0.4)'}
         onMouseLeave={e => e.currentTarget.style.boxShadow='0 4px 14px rgba(233,30,140,0.3)'}>
-        {mode==='return' ? '🔮 Show me my estimated return' : '⏳ Show me how long it takes'}
+        {mode==='return' ? 'Show me my estimated return' : '⏳ Show me how long it takes'}
       </button>
 
       {/* Error */}
@@ -560,7 +560,7 @@ export default function StockDashboard() {
       {/* ── Main 2-column layout ── */}
       <div style={{ display:'grid', gridTemplateColumns:'1fr 300px', gap:12, alignItems:'start', minWidth:0 }}>
 
-        {/* LEFT — minWidth:0 prevents grid blowout */}
+        {/* LEFT — charts only, no calculator */}
         <div style={{ display:'flex', flexDirection:'column', minWidth:0, width:'100%' }}>
           <ChartSection title="Price & Moving Averages"
             badge={duration==='1W'?'EMA 9/21':duration==='1M'?'EMA 10/30':duration==='6M'?'EMA 50/100':'EMA 13w/26w'}>
@@ -580,25 +580,6 @@ export default function StockDashboard() {
             badge={duration==='1W'?'5/13/4':duration==='1M'?'8/21/5':duration==='6M'?'12/26/9':'26/52/9'}>
             <MACDChart indicators={indicators} duration={duration}/>
           </ChartSection>
-
-          {/* Investment Calculator */}
-          <div className="card" style={{ overflow:'hidden', flex:1, borderTop:`3px solid ${A}`, width:'100%', boxSizing:'border-box' }}>
-            <div style={{ padding:'12px 16px', borderBottom:`1px solid #f0f0f0`, display:'flex', alignItems:'center', gap:10, background:'#fdf2f8' }}>
-              <div style={{ width:30, height:30, borderRadius:8, background:`linear-gradient(135deg,${A},#c2185b)`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="12" y1="1" x2="12" y2="23"/>
-                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                </svg>
-              </div>
-              <div>
-                <div style={{ fontFamily:'Figtree', fontSize:13, fontWeight:700, color:'#111118' }}>Investment Calculator</div>
-                <div style={{ fontFamily:'DM Mono', fontSize:9, color:A, letterSpacing:'0.06em' }}>USES FULL HISTORY FROM IPO DATE · {sym?.replace('.NS','')}</div>
-              </div>
-            </div>
-            <div style={{ padding:'18px 16px' }}>
-              <InvestmentCalculator sym={sym} currentPrice={q?.price}/>
-            </div>
-          </div>
         </div>
 
         {/* RIGHT sidebar — each card flush, last one flex-grows to match left */}
@@ -684,8 +665,8 @@ export default function StockDashboard() {
             </div>
           )}
 
-          {/* Timeframe guide — flex:1 makes it fill remaining height */}
-          <div className="card" style={{ flex:1 }}>
+          {/* Timeframe guide */}
+          <div className="card">
             <div style={{ padding:'10px 16px', borderBottom:'1px solid #f4f4f5', background:'#fafafa' }}>
               <span className="label">Timeframe Guide</span>
             </div>
@@ -706,6 +687,32 @@ export default function StockDashboard() {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* ── Investment Calculator — FULL WIDTH below both columns ── */}
+      <div className="card" style={{ overflow:'hidden', marginTop:12, borderTop:`3px solid ${A}`, width:'100%', boxSizing:'border-box' }}>
+        <div style={{ padding:'14px 20px', borderBottom:`1px solid #f0f0f0`, display:'flex', alignItems:'center', justifyContent:'space-between', background:'#fdf2f8', flexWrap:'wrap', gap:8 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <div style={{ width:34, height:34, borderRadius:9, background:`linear-gradient(135deg,${A},#c2185b)`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, boxShadow:`0 4px 12px rgba(233,30,140,0.3)` }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <div style={{ fontFamily:'Figtree', fontSize:14, fontWeight:700, color:'#111118' }}>Investment Calculator</div>
+              <div style={{ fontFamily:'DM Mono', fontSize:10, color:A, letterSpacing:'0.06em', marginTop:1 }}>
+                POWERED BY {sym?.replace('.NS','')} FULL HISTORY · IPO DATE → TODAY
+              </div>
+            </div>
+          </div>
+          <div style={{ fontFamily:'Figtree', fontSize:12, color:'#71717a', fontStyle:'italic' }}>
+            Enter your investment amount and get realistic projections based on real historical data
+          </div>
+        </div>
+        <div style={{ padding:'24px 28px' }}>
+          <InvestmentCalculator sym={sym} currentPrice={q?.price}/>
         </div>
       </div>
 
